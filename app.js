@@ -8,19 +8,21 @@ for (let i = 0; i < 1360; i++) {
     container.appendChild(newDiv);
 }
 
+generateFood();
+
 //SNAKE SETUP
 let currentDirection; //defines the direction that the snake is currently moving to
 let snakeHeadPosition = 659; //starting value is the center of the board
-let currentSnakeHeadDiv = document.querySelector("#square" + snakeHeadPosition);
+let currentSnakeHeadDiv = document.querySelector(`#square${snakeHeadPosition}`);
 let previousHeadPosition;
 let previousSnakeTailDiv;
-let tailLength = 4;
+let tailLength = 5;
 const snakeTail = [];
 
 const paintSnake = () => {
     currentSnakeHeadDiv.setAttribute("class" , "snake");
     snakeTail.forEach(div => {
-        const tailSquare = document.querySelector("#square" + div);
+        const tailSquare = document.querySelector(`#square${div}`);
         tailSquare.setAttribute("class" , "snake");
     })
     previousSnakeTailDiv.removeAttribute("class" , "snake"); 
@@ -64,13 +66,14 @@ const changeDirection = (directionValue) => {
 
     movementIntervalFunc = setInterval(() => {
         previousHeadPosition = snakeHeadPosition;
+        checkFood();
         while (tailLength > snakeTail.length) {
             snakeTail.unshift(previousHeadPosition);
         }
-        previousSnakeTailDiv = document.querySelector("#square" + snakeTail.pop());
+        previousSnakeTailDiv = document.querySelector(`#square${snakeTail.pop()}`);
         snakeHeadPosition += directionValue;
         checkWall();
-        currentSnakeHeadDiv = document.querySelector("#square" + snakeHeadPosition);
+        currentSnakeHeadDiv = document.querySelector(`#square${snakeHeadPosition}`);
         if (snakeHeadPosition !== "dead") {
             paintSnake();
         }
@@ -107,4 +110,28 @@ const checkWall = () => {
 const gameOver = () => {
     snakeHeadPosition = "dead";
     clearInterval(movementIntervalFunc);
+}
+
+function generateFood() {
+    const pickRandomWhiteDiv = () => {
+        const randomDiv = Math.floor(Math.random() * 1360);
+        
+        if (document.querySelector(`#square${randomDiv}`).getAttribute("class") === "snake") {
+            return pickRandomWhiteDiv();
+        } else {
+            return randomDiv;
+        }
+    }
+
+    const randomWhiteDiv = pickRandomWhiteDiv();
+
+    const foodDiv = document.querySelector(`#square${randomWhiteDiv}`);
+    foodDiv.setAttribute("class", "food");
+}
+
+function checkFood() {
+    if (document.querySelector(".food") === null) {
+        tailLength++;
+        generateFood();
+    }
 }
