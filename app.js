@@ -22,30 +22,30 @@ const paintSnake = () => {
 }
 
 //CONTROLS SETUP
-let movementIntervalVariable;
+let movementIntervalFunc;
 
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "ArrowLeft":
-            if (currentDirection !== "right") {
+            if (currentDirection !== "right" && snakeHeadPosition !== "dead") {
                 currentDirection = "left";
                 changeDirection(-1);
             }
             break;
         case "ArrowUp":
-            if (currentDirection !== "down") {
+            if (currentDirection !== "down" && snakeHeadPosition !== "dead") {
                 currentDirection = "up";
                 changeDirection(-40);
             }
             break;
         case "ArrowRight":
-            if (currentDirection !== "left") {
+            if (currentDirection !== "left" && snakeHeadPosition !== "dead") {
                 currentDirection = "right";
                 changeDirection(1);
             }
             break;
         case "ArrowDown":
-            if (currentDirection !== "up") {
+            if (currentDirection !== "up" && snakeHeadPosition !== "dead") {
                 currentDirection = "down";
                 changeDirection(40);
             }
@@ -53,22 +53,22 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
+//GAME SETUP
 const changeDirection = (directionValue) => {
-    clearInterval(movementIntervalVariable);
+    clearInterval(movementIntervalFunc);
 
-    movementIntervalVariable = setInterval(() => {
+    movementIntervalFunc = setInterval(() => {
         previousHeadPosition = snakeHeadPosition;
-        previousSnakeTailDiv = currentSnakeHeadDiv //change this when food is eaten and tail grows;
+        previousSnakeTailDiv = currentSnakeHeadDiv //TODO: change this when food is eaten and tail grows;
         snakeHeadPosition += directionValue;
         checkWall();
         currentSnakeHeadDiv = document.querySelector("#square" + snakeHeadPosition);
-        if (snakeHeadPosition != "dead") {
+        if (snakeHeadPosition !== "dead") {
             paintSnake();
         }
     }, 100)
 }
 
-//GAME SETUP
 const topWallDivIds = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39];
 const rightWallDivIds = [ 39, 79, 119, 159, 199, 239, 279, 319, 359, 399, 439, 479, 519, 559, 599, 639, 679, 719, 759, 799, 839, 879, 919, 959, 999, 1039, 1079, 1119, 1159, 1199, 1239, 1279, 1319, 1359]; 
 const bottomWallDivIds = [1358, 1357, 1356, 1355, 1354, 1353, 1352, 1351, 1350, 1349, 1348, 1347, 1346, 1345, 1344, 1343, 1342, 1341, 1340, 1339, 1338, 1337, 1336, 1335, 1334, 1333, 1332, 1331, 1330, 1329, 1328, 1327, 1326, 1325, 1324, 1323, 1322, 1321, 1320];
@@ -98,5 +98,5 @@ const checkWall = () => {
 
 const gameOver = () => {
     snakeHeadPosition = "dead";
-    clearInterval(movementIntervalVariable);
+    clearInterval(movementIntervalFunc);
 }
