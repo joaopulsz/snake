@@ -12,6 +12,8 @@
 }
 
 .snake {
+    width: 10px;
+    height: auto;
     background-color: black;
     border: 0.1px solid red;
 }

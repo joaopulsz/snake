@@ -21,8 +21,8 @@ const snakeTail = [];
 
 const paintSnake = () => {
     currentSnakeHeadDiv.setAttribute("class" , "snake");
-    snakeTail.forEach(div => {
-        const tailSquare = document.querySelector(`#square${div}`);
+    snakeTail.forEach(square => {
+        const tailSquare = document.querySelector(`#square${square}`);
         tailSquare.setAttribute("class" , "snake");
     })
     previousSnakeTailDiv.removeAttribute("class" , "snake"); 
@@ -74,6 +74,7 @@ const changeDirection = (directionValue) => {
         previousSnakeTailDiv = document.querySelector(`#square${snakeTail.pop()}`);
         snakeHeadPosition += directionValue;
         checkWall();
+        checkTail();
         currentSnakeHeadDiv = document.querySelector(`#square${snakeHeadPosition}`);
         if (snakeHeadPosition !== "dead") {
             paintSnake();
@@ -86,23 +87,31 @@ const rightWallDivIds = [ 39, 79, 119, 159, 199, 239, 279, 319, 359, 399, 439, 4
 const bottomWallDivIds = [1358, 1357, 1356, 1355, 1354, 1353, 1352, 1351, 1350, 1349, 1348, 1347, 1346, 1345, 1344, 1343, 1342, 1341, 1340, 1339, 1338, 1337, 1336, 1335, 1334, 1333, 1332, 1331, 1330, 1329, 1328, 1327, 1326, 1325, 1324, 1323, 1322, 1321, 1320];
 const leftWallDivIds = [1280, 1240, 1200, 1160, 1120, 1080, 1040, 1000, 960, 920, 880, 840, 800, 760, 720, 680, 640, 600, 560, 520, 480, 440, 400, 360, 320, 280, 240, 200, 160, 120, 80, 40];
 const checkWall = () => {
-    topWallDivIds.forEach(div => {
-        if (previousHeadPosition === div && snakeHeadPosition === div - 40) {
+    topWallDivIds.forEach(square => {
+        if (previousHeadPosition === square && snakeHeadPosition === square - 40) {
             gameOver();
         }
     })
-    rightWallDivIds.forEach(div => {
-        if (previousHeadPosition === div && snakeHeadPosition === div + 1) {
+    rightWallDivIds.forEach(square => {
+        if (previousHeadPosition === square && snakeHeadPosition === square + 1) {
             gameOver();
         }
     })
-    bottomWallDivIds.forEach(div => {
-        if (previousHeadPosition === div && snakeHeadPosition === div + 40) {
+    bottomWallDivIds.forEach(square => {
+        if (previousHeadPosition === square && snakeHeadPosition === square + 40) {
             gameOver();
         }
     })
-    leftWallDivIds.forEach(div => {
-        if (previousHeadPosition === div && snakeHeadPosition === div - 1) {
+    leftWallDivIds.forEach(square => {
+        if (previousHeadPosition === square && snakeHeadPosition === square - 1) {
+            gameOver();
+        }
+    })
+}
+
+const checkTail = () => {
+    snakeTail.forEach(square => {
+        if (snakeHeadPosition === square) {
             gameOver();
         }
     })
