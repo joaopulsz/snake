@@ -14,11 +14,16 @@ let snakeHeadPosition = 659; //starting value is the center of the board
 let currentSnakeHeadDiv = document.querySelector("#square" + snakeHeadPosition);
 let previousHeadPosition;
 let previousSnakeTailDiv;
-let snakeTail = [];
+let tailLength = 4;
+const snakeTail = [];
 
 const paintSnake = () => {
     currentSnakeHeadDiv.setAttribute("class" , "snake");
-    previousSnakeTailDiv.removeAttribute("class" , "snake");
+    snakeTail.forEach(div => {
+        const tailSquare = document.querySelector("#square" + div);
+        tailSquare.setAttribute("class" , "snake");
+    })
+    previousSnakeTailDiv.removeAttribute("class" , "snake"); 
 }
 
 //CONTROLS SETUP
@@ -59,7 +64,10 @@ const changeDirection = (directionValue) => {
 
     movementIntervalFunc = setInterval(() => {
         previousHeadPosition = snakeHeadPosition;
-        previousSnakeTailDiv = currentSnakeHeadDiv //TODO: change this when food is eaten and tail grows;
+        while (tailLength > snakeTail.length) {
+            snakeTail.unshift(previousHeadPosition);
+        }
+        previousSnakeTailDiv = document.querySelector("#square" + snakeTail.pop());
         snakeHeadPosition += directionValue;
         checkWall();
         currentSnakeHeadDiv = document.querySelector("#square" + snakeHeadPosition);
