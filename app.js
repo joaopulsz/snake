@@ -4,7 +4,7 @@ const container = document.querySelector(".container");
 for (let i = 0; i < 1360; i++) {
     const newDiv = document.createElement("div");
     newDiv.setAttribute("id", `square${i}`);
-    newDiv.setAttribute("class", "squares")
+    newDiv.setAttribute("class", "squares");
     container.appendChild(newDiv);
 }
 
@@ -26,6 +26,7 @@ const paintSnake = () => {
         tailSquare.setAttribute("class" , "snake");
     })
     previousSnakeTailDiv.removeAttribute("class" , "snake"); 
+    previousSnakeTailDiv.setAttribute("class", "squares"); 
 }
 
 //CONTROLS SETUP
