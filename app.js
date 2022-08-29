@@ -2,10 +2,10 @@
 const container = document.querySelector(".container");
 
 for (let i = 0; i < 1360; i++) {
-    const newDiv = document.createElement("div");
-    newDiv.setAttribute("id", `square${i}`);
-    newDiv.setAttribute("class", "squares");
-    container.appendChild(newDiv);
+    const newSquare = document.createElement("div");
+    newSquare.setAttribute("id", `square${i}`);
+    newSquare.setAttribute("class", "squares");
+    container.appendChild(newSquare);
 }
 
 const scoreKeeper = document.querySelector("#score");
@@ -16,25 +16,23 @@ let level = 1;
 let snakeSpeed = 110;
 levelKeeper.innerHTML = level;
 
-generateFood();
-
 //SNAKE SETUP
-let currentDirection; //defines the direction that the snake is currently moving to
+let currentDirection; //defines the direction that the snake is currently moving towards
 let snakeHeadPosition = 659; //starting value is the center of the board
-let currentSnakeHeadDiv = document.querySelector(`#square${snakeHeadPosition}`);
+let currentSnakeHead = document.querySelector(`#square${snakeHeadPosition}`);
 let previousHeadPosition;
-let previousSnakeTailDiv;
-let tailLength = 5;
+let previousSnakeTailSquare;
+let tailLength = 5; //starting length
 const snakeTail = [];
 
 const paintSnake = () => {
-    currentSnakeHeadDiv.setAttribute("class" , "snake");
+    currentSnakeHead.setAttribute("class" , "snake");
     snakeTail.forEach(square => {
         const tailSquare = document.querySelector(`#square${square}`);
         tailSquare.setAttribute("class" , "snake");
     })
-    previousSnakeTailDiv.removeAttribute("class" , "snake"); 
-    previousSnakeTailDiv.setAttribute("class", "squares"); 
+    previousSnakeTailSquare.removeAttribute("class" , "snake"); 
+    previousSnakeTailSquare.setAttribute("class", "squares"); 
 }
 
 //CONTROLS SETUP
@@ -44,26 +42,26 @@ document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "ArrowLeft":
             if (currentDirection !== "right" && currentDirection !== "left" && snakeHeadPosition !== "dead") {
-                currentDirection = "left";
                 moveSnake(-1);
+                currentDirection = "left";
             }
             break;
         case "ArrowUp":
             if (currentDirection !== "down" && currentDirection !== "up" && snakeHeadPosition !== "dead") {
-                currentDirection = "up";
                 moveSnake(-40);
+                currentDirection = "up";
             }
             break;
         case "ArrowRight":
             if (currentDirection !== "left" && currentDirection !== "right" && snakeHeadPosition !== "dead") {
-                currentDirection = "right";
                 moveSnake(1);
+                currentDirection = "right";
             }
             break;
         case "ArrowDown":
             if (currentDirection !== "up" && currentDirection !== "down" && snakeHeadPosition !== "dead") {
-                currentDirection = "down";
                 moveSnake(40);
+                currentDirection = "down";
             }
             break;
     }
@@ -79,11 +77,11 @@ const moveSnake = (directionValue) => {
         while (tailLength > snakeTail.length) {
             snakeTail.unshift(previousHeadPosition);
         }
-        previousSnakeTailDiv = document.querySelector(`#square${snakeTail.pop()}`);
+        previousSnakeTailSquare = document.querySelector(`#square${snakeTail.pop()}`);
         snakeHeadPosition += directionValue;
         checkWall();
         checkTail();
-        currentSnakeHeadDiv = document.querySelector(`#square${snakeHeadPosition}`);
+        currentSnakeHead = document.querySelector(`#square${snakeHeadPosition}`);
         if (snakeHeadPosition !== "dead") {
             paintSnake();
         }
@@ -131,20 +129,20 @@ const gameOver = () => {
 }
 
 function generateFood() {
-    const pickRandomWhiteDiv = () => {
-        const randomDiv = Math.floor(Math.random() * 1360);
+    const getRandomWhiteSquare = () => {
+        const randomSquare = Math.floor(Math.random() * 1360);
         
-        if (document.querySelector(`#square${randomDiv}`).getAttribute("class") === "snake") {
-            return pickRandomWhiteDiv();
+        if (document.querySelector(`#square${randomSquare}`).getAttribute("class") === "snake") {
+            return getRandomWhiteSquare();
         } else {
-            return randomDiv;
+            return randomSquare;
         }
     }
 
-    const randomWhiteDiv = pickRandomWhiteDiv();
+    const randomWhiteSquare = getRandomWhiteSquare();
 
-    const foodDiv = document.querySelector(`#square${randomWhiteDiv}`);
-    foodDiv.setAttribute("class", "food");
+    const foodSquare = document.querySelector(`#square${randomWhiteSquare}`);
+    foodSquare.setAttribute("class", "food");
 }
 
 function checkFood() {

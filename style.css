@@ -1,3 +1,7 @@
+h1 {
+    color: green;
+}
+
 .container {
     border: 2px solid black;
     width: 400px;
@@ -16,6 +20,7 @@
     height: auto;
     background-color: green;
     border: 0.1px solid brown;
+    border-radius: 25%;
 }
 
 .food {
