@@ -14,10 +14,12 @@
 .snake {
     width: 10px;
     height: auto;
-    background-color: black;
-    border: 0.1px solid red;
+    background-color: brown;
+    border: 0.1px solid green;
 }
 
 .food {
-    background-color: green;
+    background-color: yellow;
+    border: 0.1px dotted black;
+    border-radius: 50%;
 }

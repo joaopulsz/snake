@@ -8,6 +8,14 @@ for (let i = 0; i < 1360; i++) {
     container.appendChild(newDiv);
 }
 
+const scoreKeeper = document.querySelector("#score");
+let score = 0;
+scoreKeeper.innerHTML = score;
+const levelKeeper = document.querySelector("#level");
+let level = 1;
+let snakeSpeed = 110;
+levelKeeper.innerHTML = level;
+
 generateFood();
 
 //SNAKE SETUP
@@ -79,7 +87,7 @@ const changeDirection = (directionValue) => {
         if (snakeHeadPosition !== "dead") {
             paintSnake();
         }
-    }, 100)
+    }, snakeSpeed)
 }
 
 const topWallDivIds = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39];
@@ -142,6 +150,21 @@ function generateFood() {
 function checkFood() {
     if (document.querySelector(".food") === null) {
         tailLength++;
+        updateScore();
         generateFood();
     }
+}
+
+const updateScore = () => {
+    score++;
+    scoreKeeper.innerHTML = score;
+    if (score % 10 === 0) {
+        updateLevel();
+    }
+}
+
+const updateLevel = () => {
+    level++;
+    snakeSpeed -= 5;
+    levelKeeper.innerHTML = level;
 }
