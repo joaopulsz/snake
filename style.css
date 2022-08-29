@@ -14,8 +14,8 @@
 .snake {
     width: 10px;
     height: auto;
-    background-color: brown;
-    border: 0.1px solid green;
+    background-color: green;
+    border: 0.1px solid brown;
 }
 
 .food {

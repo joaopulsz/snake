@@ -43,34 +43,34 @@ let movementIntervalFunc;
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "ArrowLeft":
-            if (currentDirection !== "right" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "right" && currentDirection !== "left" && snakeHeadPosition !== "dead") {
                 currentDirection = "left";
-                changeDirection(-1);
+                moveSnake(-1);
             }
             break;
         case "ArrowUp":
-            if (currentDirection !== "down" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "down" && currentDirection !== "up" && snakeHeadPosition !== "dead") {
                 currentDirection = "up";
-                changeDirection(-40);
+                moveSnake(-40);
             }
             break;
         case "ArrowRight":
-            if (currentDirection !== "left" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "left" && currentDirection !== "right" && snakeHeadPosition !== "dead") {
                 currentDirection = "right";
-                changeDirection(1);
+                moveSnake(1);
             }
             break;
         case "ArrowDown":
-            if (currentDirection !== "up" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "up" && currentDirection !== "down" && snakeHeadPosition !== "dead") {
                 currentDirection = "down";
-                changeDirection(40);
+                moveSnake(40);
             }
             break;
     }
 })
 
 //GAME SETUP
-const changeDirection = (directionValue) => {
+const moveSnake = (directionValue) => {
     clearInterval(movementIntervalFunc);
 
     movementIntervalFunc = setInterval(() => {
