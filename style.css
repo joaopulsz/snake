@@ -23,6 +23,14 @@ h1 {
     border-radius: 25%;
 }
 
+.dead-snake {
+    width: 10px;
+    height: auto;
+    background-color: rgba(0, 128, 0, 0.5);
+    border: 0.1px solid brown;
+    border-radius: 25%;
+}
+
 .food {
     background-color: yellow;
     border: 0.1px dotted black;

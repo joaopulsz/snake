@@ -128,6 +128,13 @@ const checkTail = () => {
 const gameOver = () => {
     snakeHeadPosition = "dead";
     clearInterval(movementIntervalFunc);
+
+    currentSnakeHead.setAttribute("class" , "dead-snake");
+    snakeTail.forEach(square => {
+        const tailSquare = document.querySelector(`#square${square}`);
+        tailSquare.setAttribute("class" , "dead-snake");
+    })
+    previousSnakeTailSquare.setAttribute("class" , "dead-snake");
 }
 
 function generateFood() {
