@@ -42,25 +42,25 @@ const paintSnake = () => {
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "ArrowLeft":
-            if (currentDirection !== "right" && currentDirection !== "left" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "right" && currentDirection !== "left" && snakeHeadPosition !== "dead" && !isChangingDirection) {
                 moveSnake(-1);
                 currentDirection = "left";
             }
             break;
         case "ArrowUp":
-            if (currentDirection !== "down" && currentDirection !== "up" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "down" && currentDirection !== "up" && snakeHeadPosition !== "dead" && !isChangingDirection) {
                 moveSnake(-40);
                 currentDirection = "up";
             }
             break;
         case "ArrowRight":
-            if (currentDirection !== "left" && currentDirection !== "right" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "left" && currentDirection !== "right" && snakeHeadPosition !== "dead" && !isChangingDirection) {
                 moveSnake(1);
                 currentDirection = "right";
             }
             break;
         case "ArrowDown":
-            if (currentDirection !== "up" && currentDirection !== "down" && snakeHeadPosition !== "dead") {
+            if (currentDirection !== "up" && currentDirection !== "down" && snakeHeadPosition !== "dead" && !isChangingDirection) {
                 moveSnake(40);
                 currentDirection = "down";
             }
@@ -69,8 +69,10 @@ document.addEventListener("keydown", (e) => {
 })
 
 //GAME SETUP
+let isChangingDirection = false;
 let movementIntervalFunc;
 const moveSnake = (directionValue) => {
+    isChangingDirection = true;
     clearInterval(movementIntervalFunc);
 
     movementIntervalFunc = setInterval(() => {
@@ -87,6 +89,7 @@ const moveSnake = (directionValue) => {
         if (snakeHeadPosition !== "dead") {
             paintSnake();
         }
+        isChangingDirection = false;
     }, snakeSpeed)
 }
 
